@@ -39,6 +39,7 @@
                 }
             }
             // AbstractProductB
+
             abstract class Engine
             {
                 public virtual void GetPower()
@@ -69,11 +70,42 @@
                     Console.WriteLine("Mersedes Engine 5.3");
                 }
             }
+            // AbstractProductC
+            abstract class Wheels
+            {
+                public virtual void GetSpeed()
+                {
+                }
+            }
+            class FordWheels : Wheels
+            {
+                public override void GetSpeed()
+                {
+                    Console.WriteLine("Ford Wheels 3.6.4");
+                }
+            }
+            //ConcreteProductB2
+            class ToyotaWheels : Wheels
+            {
+                public override void GetSpeed()
+                {
+                    Console.WriteLine("Toyota Wheels 2.5.7");
+                }
+            }
+            //ConcreteProductB3
+            class MersedesWheels : Wheels
+            {
+                public override void GetSpeed()
+                {
+                    Console.WriteLine("Mersedes Wheels  4.7.8");
+                }
+            }
             // AbstractFactory
             interface ICarFactory
             {
                 Car CreateCar();
                 Engine CreateEngine();
+                Wheels CreateWheels();
             }
             // ConcreteFactory1
             class FordFactory : ICarFactory
@@ -86,6 +118,10 @@
                 Engine ICarFactory.CreateEngine()
                 {
                     return new FordEngine();
+                }
+                Wheels ICarFactory.CreateWheels()
+                {
+                    return new FordWheels();
                 }
             }
             // ConcreteFactory2
@@ -100,6 +136,10 @@
                 {
                     return new ToyotaEngine();
                 }
+                Wheels ICarFactory.CreateWheels()
+                {
+                    return new ToyotaWheels();
+                }
             }
             // ConcreteFactory3
             class MersedesFactory : ICarFactory
@@ -113,6 +153,10 @@
                 {
                     return new MersedesEngine();
                 }
+                Wheels ICarFactory.CreateWheels()
+                {
+                    return new MersedesWheels();
+                }
             }
             static void Main(string[] args)
             {
@@ -121,18 +165,25 @@
                 myCar.Info();
                 Engine myEngine = carFactory.CreateEngine();
                 myEngine.GetPower();
+                Wheels myWheels = carFactory.CreateWheels();
+                myWheels.GetSpeed();
 
                 carFactory = new FordFactory();    
                 myCar = carFactory.CreateCar();
                 myCar.Info();
                 myEngine = carFactory.CreateEngine();
                 myEngine.GetPower();
+                myWheels = carFactory.CreateWheels();
+                myWheels.GetSpeed();
 
                 carFactory = new MersedesFactory();
                 myCar = carFactory.CreateCar();
                 myCar.Info();
                 myEngine = carFactory.CreateEngine();
                 myEngine.GetPower();
+                myWheels = carFactory.CreateWheels();
+                myWheels.GetSpeed();
+
                 Console.ReadKey();
             }
         }
